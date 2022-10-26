@@ -1,25 +1,17 @@
-import { useState } from 'react';
-import { PropTypes } from 'prop-types';
-import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { onFilter, getFilter } from '../redux/filterSlice';
 
-export const Filter = ({ searchHandler }) => {
-  const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    searchHandler(filter);
-  }, [filter, searchHandler]);
+export const Filter = () => {
+  const filter = useSelector(getFilter);
+  const dispatch = useDispatch();
 
   return (
     <input
-      onChange={e => setFilter(e.target.value)}
+      onChange={e => dispatch(onFilter({ filter: e.target.value }))}
       value={filter}
       type="text"
       placeholder="Search"
       name="filter"
     />
   );
-};
-
-Filter.propTypes = {
-  searchHandler: PropTypes.func.isRequired,
 };

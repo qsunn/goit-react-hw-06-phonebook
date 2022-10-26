@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
-import { PropTypes } from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../redux/contactsSlice';
 
-export const ContactForm = ({ onAddContact }) => {
+export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const dispatch = useDispatch();
 
   const reset = () => {
     setName('');
@@ -32,7 +35,7 @@ export const ContactForm = ({ onAddContact }) => {
       name: name,
       number: number,
     };
-    onAddContact(newContact);
+    dispatch(addContact({ contact: newContact }));
     reset();
   };
 
@@ -69,8 +72,4 @@ export const ContactForm = ({ onAddContact }) => {
       <button type="submit">Add contact</button>
     </form>
   );
-};
-
-ContactForm.propTypes = {
-  onAddContact: PropTypes.func.isRequired,
 };
